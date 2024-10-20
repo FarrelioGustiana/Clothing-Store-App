@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ShirtIcon } from "lucide-react-native";
-import { router } from "expo-router";
+import { Href, router } from "expo-router";
+import ButtonTemplate from "@components/ButtonTemplate";
 
 export default function Index() {
 	return (
@@ -9,21 +10,17 @@ export default function Index() {
 				<View style={styles.imgContainer}>
 					<ShirtIcon color="#000000" size={"60%"} strokeWidth={2} />
 				</View>
-				<Text style={styles.title}>Lucien Veroux</Text>
+				<Text style={styles.title}>Farrelio & Co.</Text>
 				<Text style={{ textAlign: "center", maxWidth: "80%" }}>
 					Lorem ipsum, dolor sit amet consectetur adipisicing elit.
 					Blanditiis quasi rerum.
 				</Text>
 			</View>
 			<View style={styles.buttonsContainer}>
-				<TouchableOpacity
-					onPress={() => router.push("/sign-up")}
-					style={styles.button}
-				>
-					<Text style={{ color: "white", fontWeight: "700" }}>
-						Let's Get Started
-					</Text>
-				</TouchableOpacity>
+				<ButtonTemplate
+					text="Get Started"
+					handlePress={() => router.push("/sign-up" as Href)}
+				/>
 			</View>
 		</View>
 	);
@@ -67,11 +64,5 @@ const styles = StyleSheet.create({
 		width: "100%",
 		padding: 20,
 		marginTop: "65%",
-	},
-	button: {
-		backgroundColor: "#000",
-		padding: 15,
-		alignItems: "center",
-		borderRadius: 20,
 	},
 });
