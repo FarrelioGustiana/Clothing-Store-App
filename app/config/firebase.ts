@@ -8,13 +8,13 @@ import { getFirestore } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const firebaseConfig = {
-	apiKey: "AIzaSyCkij9SWk4F-nfL4bVWrswpALpOYqtsd0E",
-	authDomain: "clothing-store-app-ab050.firebaseapp.com",
-	projectId: "clothing-store-app-ab050",
-	storageBucket: "clothing-store-app-ab050.appspot.com",
-	messagingSenderId: "44554634644",
-	appId: "1:44554634644:web:96f60e5272d9d6721ebb81",
-	measurementId: "G-ZSWQL7B1HE",
+	apiKey: process.env.FIREBASE_API_KEY,
+	authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+	projectId: process.env.FIREBASE_PROJECT_ID,
+	storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+	messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+	appId: process.env.FIREBASE_APP_ID,
+	measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
