@@ -3,7 +3,15 @@ import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import {
+	addDoc,
+	collection,
+	deleteDoc,
+	doc,
+	getDocs,
+	setDoc,
+	updateDoc,
+} from "firebase/firestore";
 
 export const signUp = async (
 	username: string,
@@ -31,7 +39,54 @@ export const signIn = async (
 	password: string
 ): Promise<void> => {
 	try {
-		const res = await signInWithEmailAndPassword(auth, email, password);
+		await signInWithEmailAndPassword(auth, email, password);
+	} catch (error) {
+		throw error as Error;
+	}
+};
+
+export const addCategory = async (name: string): Promise<void> => {
+	const newCategory = {
+		categoryName: name,
+		products: [],
+	};
+	try {
+		await addDoc(collection(db, "categories"), newCategory);
+	} catch (error) {
+		throw error as Error;
+	}
+};
+
+export const getCategories = async () => {
+	try {
+		const data = await getDocs(collection(db, "categories"));
+		const filteredData = data.docs.map((c) => ({
+			...c.data(),
+			id: c.id,
+		}));
+		return filteredData;
+	} catch (error) {
+		throw error as Error;
+	}
+};
+
+export const deleteCategory = async (id: string): Promise<void> => {
+	try {
+		await deleteDoc(doc(db, "categories", id));
+	} catch (error) {
+		throw error as Error;
+	}
+};
+
+export const updateCategory = async (
+	id: string,
+	updatedName: string
+): Promise<void> => {
+	if (!updatedName.trim()) return;
+	const categoryDoc = doc(db, "categories", id);
+
+	try {
+		await updateDoc(categoryDoc, { categoryName: updatedName });
 	} catch (error) {
 		throw error as Error;
 	}

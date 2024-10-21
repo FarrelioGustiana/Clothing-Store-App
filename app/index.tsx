@@ -1,9 +1,26 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ShirtIcon } from "lucide-react-native";
-import { Href, router } from "expo-router";
+import { Href, Redirect, router } from "expo-router";
 import ButtonTemplate from "@components/ButtonTemplate";
+import useUserStore from "@/lib/useUserStore";
+import { useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@config/firebase";
 
 export default function Index() {
+	const { currentUser, fetchUserInfo, isLoading } = useUserStore();
+	useEffect(() => {
+		const unSub = onAuthStateChanged(auth, (user) => {
+			fetchUserInfo(user?.uid as string);
+		});
+
+		return () => {
+			unSub();
+		};
+	}, [fetchUserInfo]);
+
+	if (currentUser) return <Redirect href="/home" />;
+
 	return (
 		<View style={styles.mainContainer}>
 			<View style={styles.brandContainer}>
